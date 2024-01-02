@@ -2,12 +2,23 @@ import React, { useEffect, useState } from 'react'
 
 import { LIB_VERSION } from 'electric-sql/version'
 import { makeElectricContext, useLiveQuery } from 'electric-sql/react'
-import { genUUID, uniqueTabId } from 'electric-sql/util'
+import { randomValue, uniqueTabId } from 'electric-sql/util'
 import { ElectricDatabase, electrify } from 'electric-sql/wa-sqlite'
 
 import { authToken } from './auth'
 import { DEBUG_MODE, ELECTRIC_URL } from './config'
 import { Electric, Items as Item, schema } from './generated/client'
+
+import {
+  Provider,
+  useAddRowCallback,
+  useCreatePersister,
+  useCreateStore,
+  useDelTableCallback,
+} from 'tinybase/ui-react';
+import { createStore } from 'tinybase';
+import { TableInHtmlTable } from 'tinybase/ui-react-dom';
+import { createElectricSqlPersister } from 'tinybase/persisters/persister-electric-sql';
 
 import './Example.css'
 
@@ -48,22 +59,41 @@ export const Example = () => {
     }
   }, [])
 
+  const store = useCreateStore(createStore);
+  useCreatePersister(
+    store,
+    (store) =>
+      electric
+        ? createElectricSqlPersister(store, electric, {
+            mode: 'tabular',
+            tables: {
+              load: { items: { tableId: 'items', rowIdColumnName: 'id' } },
+              save: { items: { tableName: 'items', rowIdColumnName: 'id' } },
+            },
+          })
+        : undefined,
+    [electric],
+    async (persister) => {
+      await persister?.startAutoLoad();
+      await persister?.startAutoSave();
+    }
+  );
+
   if (electric === undefined) {
     return null
   }
 
   return (
     <ElectricProvider db={electric}>
-      <ExampleComponent />
+      <Provider store={store}>
+        <ExampleComponent />
+      </Provider>
     </ElectricProvider>
   )
 }
 
 const ExampleComponent = () => {
   const { db } = useElectric()!
-  const { results } = useLiveQuery(
-    db.items.liveMany()
-  )
 
   useEffect(() => {
     const syncItems = async () => {
@@ -77,21 +107,12 @@ const ExampleComponent = () => {
     syncItems()
   }, [])
 
-  const addItem = async () => {
-    await db.items.create({
-      data: {
-        id: genUUID(),
-        text1: 'foo',
-        text2: 'bar'
-      }
-    })
-  }
+  const addItem = useAddRowCallback('items', () => ({
+    text1: randomValue(), 
+    text2: randomValue(),
+  }))
 
-  const clearItems = async () => {
-    await db.items.deleteMany()
-  }
-
-  const items: Item[] = results ?? []
+  const clearItems = useDelTableCallback('items');
 
   return (
     <div>
@@ -103,13 +124,12 @@ const ExampleComponent = () => {
           Clear
         </button>
       </div>
-      {items.map((item: Item, index: number) => (
-        <p key={ index } className="item">
-          <code>{ item.id }</code>,
-          <code>{ item.text1 }</code>,
-          <code>{ item.text2 }</code>
-        </p>
-      ))}
+      <TableInHtmlTable
+        tableId='items'
+        editable={true}
+        idColumn={false}
+        headerRow={false}
+      />
     </div>
   )
 }
