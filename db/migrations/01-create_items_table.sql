@@ -11,7 +11,9 @@
 
 -- Create a simple items table.
 CREATE TABLE IF NOT EXISTS items (
-  value TEXT PRIMARY KEY NOT NULL
+  id TEXT PRIMARY KEY NOT NULL,
+  text1 TEXT,
+  text2 TEXT
 );
 
 -- ⚡

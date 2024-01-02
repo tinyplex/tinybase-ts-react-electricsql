@@ -80,7 +80,9 @@ const ExampleComponent = () => {
   const addItem = async () => {
     await db.items.create({
       data: {
-        value: genUUID(),
+        id: genUUID(),
+        text1: 'foo',
+        text2: 'bar'
       }
     })
   }
@@ -103,7 +105,9 @@ const ExampleComponent = () => {
       </div>
       {items.map((item: Item, index: number) => (
         <p key={ index } className="item">
-          <code>{ item.value }</code>
+          <code>{ item.id }</code>,
+          <code>{ item.text1 }</code>,
+          <code>{ item.text2 }</code>
         </p>
       ))}
     </div>
