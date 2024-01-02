@@ -1,90 +1,77 @@
-<a href="https://electric-sql.com">
-  <picture>
-    <source media="(prefers-color-scheme: dark)"
-        srcset="https://raw.githubusercontent.com/electric-sql/meta/main/identity/ElectricSQL-logo-light-trans.svg"
-    />
-    <source media="(prefers-color-scheme: light)"
-        srcset="https://raw.githubusercontent.com/electric-sql/meta/main/identity/ElectricSQL-logo-black.svg"
-    />
-    <img alt="ElectricSQL logo"
-        src="https://raw.githubusercontent.com/electric-sql/meta/main/identity/ElectricSQL-logo-black.svg"
-    />
-  </picture>
-</a>
+# tinybase-ts-react-electricsql
 
-# ElectricSQL - Web example
+This is a template for a simple [TinyBase](https://tinybase.org/) app, using
+TypeScript, React, and ElectricSQL.
 
-This is an example web application using ElectricSQL in the browser with [wa-sqlite](https://github.com/rhashimoto/wa-sqlite).
+It is a fork of the [ElectricSQL web
+example](https://github.com/electricsql/electric/tree/main/examples/web-wa-sqlite)
+app, with small changes to introduce TinyBase into the view layer. All the
+credit for the magic goes to ElectricSQL!
 
 ## Instructions
 
-Clone the [electric-sql/electric](https://github.com/electric-sql/electric) mono-repo and change directory into this example folder:
+1. Make a copy of this template into a new directory:
 
 ```sh
-git clone https://github.com/electric-sql/electric
-cd electric/examples/web-wa-sqlite
+npx degit tinyplex/tinybase-ts-react-electricsql my-tinybase-app
 ```
 
-## Pre-reqs
-
-You need [NodeJS >= 16.11 and Docker Compose v2](https://electric-sql.com/docs/usage/installation/prereqs). Install `yarn` if you don't have it already:
-
-```shell
-npm -g install yarn
-```
-
-## Install
-
-Install the dependencies:
+2. Go into the directory:
 
 ```sh
-yarn
+cd my-tinybase-app
 ```
 
-## Setup
-
-Start Postgres and Electric using Docker (see [running the examples](https://electric-sql.com/docs/examples/notes/running) for more options):
-
-```shell
-yarn backend:up
-# Or `yarn backend:start` to foreground
-```
-
-Note that, if useful, you can connect to Postgres using:
-
-```shell
-yarn db:psql
-```
-
-Setup your [database schema](https://electric-sql.com/docs/usage/data-modelling):
-
-```shell
-yarn db:migrate
-```
-
-Generate your [type-safe client](https://electric-sql.com/docs/usage/data-access/client):
-
-```shell
-yarn client:generate
-# or `yarn client:watch`` to re-generate whenever the DB schema changes
-```
-
-## Run
-
-Start your app:
+3. Install the dependencies:
 
 ```sh
-yarn start
+npm install
 ```
 
-Open [localhost:3001](http://localhost:3001) in your web browser.
+Note that you will also need to install [Docker](https://docs.docker.com/engine/install/).
 
-## Develop
+4. Start Postgres and Electric using Docker:
 
-`./src/Example.tsx` has the main example code. For more information see the:
+```sh
+npm run backend:up
+```
 
-- [Documentation](https://electric-sql.com/docs)
-- [Quickstart](https://electric-sql.com/docs/quickstart)
-- [Usage guide](https://electric-sql.com/docs/usage)
+5. Setup the database schema:
 
-If you need help [let us know on Discord](https://discord.electric-sql.com).
+```sh
+npm run db:migrate
+```
+
+6. Generate the type-safe client:
+
+```sh
+npm run client:generate
+```
+
+7. Run the server:
+
+```sh
+npm run start
+```
+
+8. Go the URL shown and enjoy!
+
+## Other templates
+
+There are seven templates for TinyBase, of which this is one:
+
+|     | Template                                                                                       | Language   | React | Plus        |
+| --- | ---------------------------------------------------------------------------------------------- | ---------- | ----- | ----------- |
+|     | [vite-tinybase](https://github.com/tinyplex/vite-tinybase)                                     | JavaScript | No    |             |
+|     | [vite-tinybase-ts](https://github.com/tinyplex/vite-tinybase-ts)                               | TypeScript | No    |             |
+|     | [vite-tinybase-react](https://github.com/tinyplex/vite-tinybase-react)                         | JavaScript | Yes   |             |
+|     | [vite-tinybase-ts-react](https://github.com/tinyplex/vite-tinybase-ts-react)                   | TypeScript | Yes   |             |
+|     | [vite-tinybase-ts-react-crsqlite](https://github.com/tinyplex/vite-tinybase-ts-react-crsqlite) | TypeScript | Yes   | CR-SQLite   |
+|     | [tinybase-ts-react-partykit](https://github.com/tinyplex/tinybase-ts-react-partykit)           | TypeScript | Yes   | PartyKit    |
+| 👉  | [tinybase-ts-react-electricsql](https://github.com/tinyplex/tinybase-ts-react-electricsql)     | TypeScript | Yes   | ElectricSQL |
+
+## License
+
+This template is forked from an ElectricSQL example that has an Apache-2
+license. [TinyBase](https://github.com/tinyplex/tinybase/blob/main/LICENSE) is
+MIT licensed.
