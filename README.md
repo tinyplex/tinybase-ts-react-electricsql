@@ -8,6 +8,8 @@ example](https://github.com/electricsql/electric/tree/main/examples/web-wa-sqlit
 app, with small changes to introduce TinyBase into the view layer. All the
 credit for the magic goes to ElectricSQL!
 
+![A four-way sync between browsers](fourway.png)
+
 ## Instructions
 
 1. Make a copy of this template into a new directory:
