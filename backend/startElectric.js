@@ -1,7 +1,7 @@
 const shell = require('shelljs')
 
 let db = process.env.DATABASE_URL
-let electricPort = process.env.ELECTRIC_PORT ?? 5133
+let electricPort = process.env.ELECTRIC_PORT ?? 5134
 let electricProxyPort = process.env.ELECTRIC_PROXY_PORT ?? 65432
 
 let args = process.argv.slice(2)
