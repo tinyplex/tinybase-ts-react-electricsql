@@ -53,7 +53,7 @@ npm run client:generate
 7. Run the server:
 
 ```sh
-npm run start
+npm run dev
 ```
 
 8. Go the URL shown and enjoy!

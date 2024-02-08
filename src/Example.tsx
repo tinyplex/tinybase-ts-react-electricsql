@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 
 import { LIB_VERSION } from 'electric-sql/version'
-import { makeElectricContext, useLiveQuery } from 'electric-sql/react'
+import { makeElectricContext } from 'electric-sql/react'
 import { randomValue, uniqueTabId } from 'electric-sql/util'
 import { ElectricDatabase, electrify } from 'electric-sql/wa-sqlite'
 
 import { authToken } from './auth'
-import { DEBUG_MODE, ELECTRIC_URL } from './config'
-import { Electric, Items as Item, schema } from './generated/client'
+import { Electric, schema } from './generated/client'
 
 import {
   Provider,
@@ -35,14 +34,14 @@ export const Example = () => {
         auth: {
           token: authToken()
         },
-        debug: DEBUG_MODE,
-        url: ELECTRIC_URL
+        debug: import.meta.env.DEV,
+        url: import.meta.env.ELECTRIC_SERVICE
       }
 
       const { tabId } = uniqueTabId()
       const scopedDbName = `basic-${LIB_VERSION}-${tabId}.db`
 
-      const conn = await ElectricDatabase.init(scopedDbName, '')
+      const conn = await ElectricDatabase.init(scopedDbName)
       const electric = await electrify(conn, schema, config)
 
       if (!isMounted) {
