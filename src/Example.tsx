@@ -1,13 +1,11 @@
-import  { useEffect, useState } from 'react'
-
-import { LIB_VERSION } from 'electric-sql/version'
-import { makeElectricContext } from 'electric-sql/react'
-import { randomValue, uniqueTabId } from 'electric-sql/util'
-import { ElectricDatabase, electrify } from 'electric-sql/wa-sqlite'
-
-import { authToken } from './auth'
-import { Electric, schema } from './generated/client'
-
+import './Example.css';
+import { useEffect, useState } from 'react';
+import { makeElectricContext } from 'electric-sql/react';
+import { randomValue, uniqueTabId } from 'electric-sql/util';
+import { LIB_VERSION } from 'electric-sql/version';
+import { ElectricDatabase, electrify } from 'electric-sql/wa-sqlite';
+import { createStore } from 'tinybase';
+import { createElectricSqlPersister } from 'tinybase/persisters/persister-electric-sql';
 import {
   Provider,
   useAddRowCallback,
@@ -15,11 +13,9 @@ import {
   useCreateStore,
   useDelTableCallback,
 } from 'tinybase/ui-react';
-import { createStore } from 'tinybase';
 import { TableInHtmlTable } from 'tinybase/ui-react-dom';
-import { createElectricSqlPersister } from 'tinybase/persisters/persister-electric-sql';
-
-import './Example.css'
+import { authToken } from './auth';
+import { Electric, schema } from './generated/client';
 
 const { ElectricProvider, useElectric } = makeElectricContext<Electric>()
 
@@ -104,7 +100,7 @@ const ExampleComponent = () => {
     }
 
     syncItems()
-  }, [])
+  }, [db.items])
 
   const addItem = useAddRowCallback('items', () => ({
     text1: randomValue(), 
