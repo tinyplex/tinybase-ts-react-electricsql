@@ -1,5 +1,10 @@
 # tinybase-ts-react-electricsql
 
+> [!WARNING]
+> This template has been deprecated. Please use the far more useful [`create tinybase`](https://github.com/tinyplex/create-tinybase) instead. Thank you!
+
+---
+
 This is a template for a simple [TinyBase](https://tinybase.org/) app, using
 TypeScript, React, and ElectricSQL.
 
